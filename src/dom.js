@@ -7,10 +7,11 @@ async function searchValue() {
   try {
     const location = document.querySelector('#search-input').value;
     const dataObj = await getData(location);
-    console.log(dataObj);
-    updateUI(dataObj);
+    if (dataObj) {
+      updateUI(dataObj);
+    }
   } catch (error) {
-    alert(error);
+    alert('Failed to fetch weather data. Please try again.');
   }
 }
 
