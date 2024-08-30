@@ -7,9 +7,12 @@ async function getData(location) {
       { mode: 'cors' }
     );
     const json =  await response.json()
+    console.log(json)
     const dataInfo = {
       location: json.resolvedAddress,
       condition: json.currentConditions.conditions,
+      currentTemp: json.currentConditions.temp,
+      feelsLike: json.currentConditions.feelslike,
     }
     return dataInfo;
 
