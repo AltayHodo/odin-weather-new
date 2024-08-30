@@ -2,6 +2,24 @@ import { getData } from './api';
 
 const searchButton = document.querySelector('#search-button');
 searchButton.addEventListener('click', searchValue);
+let isFahrenheit = true;
+
+const toggleTempButton = document.querySelector('.toggle-temp');
+toggleTempButton.addEventListener('click', toggleTemp);
+
+function toggleTemp() {
+  const f = document.querySelector('.fahrenheit');
+  const c = document.querySelector('.celsius');
+  if (isFahrenheit) {
+    f.classList.remove('active');
+    c.classList.add('active');
+    isFahrenheit = false;
+  } else {
+    c.classList.remove('active');
+    f.classList.add('active');
+    isFahrenheit = true;
+  }
+}
 
 async function searchValue() {
   try {
@@ -22,8 +40,13 @@ function updateUI(dataObj) {
   const feelsLike = document.querySelector('.feels-like');
   cityName.textContent = dataObj.location;
   currentCondition.textContent = dataObj.condition;
-  currentTemp.textContent = `Current temperature: ${dataObj.currentTemp}°`;
-  feelsLike.textContent = `Feels like: ${dataObj.feelsLike}°`;
+  if (isFahrenheit) {
+    currentTemp.textContent = `Current temperature: ${dataObj.currentTempF}°`;
+    feelsLike.textContent = `Feels like: ${dataObj.feelsLikeF}°`;
+  } else {
+    currentTemp.textContent = `Current temperature: ${dataObj.currentTempC}°`;
+    feelsLike.textContent = `Feels like: ${dataObj.feelsLikeC}°`;
+  }
 }
 
 export { searchValue };

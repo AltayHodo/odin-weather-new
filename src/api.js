@@ -12,16 +12,21 @@ async function getData(location) {
     }
 
     const json = await response.json();
+    const currentTempF = json.currentConditions.temp;
+    const feelsLikeF = json.currentConditions.feelslike;
     const dataInfo = {
       location: json.resolvedAddress,
       condition: json.currentConditions.conditions,
-      currentTemp: json.currentConditions.temp,
-      feelsLike: json.currentConditions.feelslike,
+      currentTempF,
+      feelsLikeF,
+      currentTempC: Math.round((((currentTempF - 32) * 5) / 9) * 100) / 100,
+      feelsLikeC: Math.round((((feelsLikeF - 32) * 5) / 9) * 100) / 100,
     };
+
     return dataInfo;
   } catch (error) {
     console.error(error);
-    throw error; 
+    throw error;
   }
 }
 
